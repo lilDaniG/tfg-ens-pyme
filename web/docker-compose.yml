@@ -3,6 +3,8 @@ services:
     build: .
     ports:
       - "5000:5000"
+    environment:
+      - FLASK_ENV=development    # activa debug/reload en Flask
     volumes:
-      - ./:/app         # monta TODO el directorio web/ en /app del contenedor
-      - ./uploads:/app/uploads
+      - .:/app                   # monta todo web/ en /app dentro del contenedor
+      - ./uploads:/app/uploads   # mantiene persistentes los excels subidos
