@@ -1,8 +1,8 @@
-version: '3.8'
 services:
   web:
     build: .
     ports:
       - "5000:5000"
     volumes:
+      - ./:/app         # monta TODO el directorio web/ en /app del contenedor
       - ./uploads:/app/uploads

@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="es">
+<head><meta charset="utf-8"><title>Resultado Evaluación</title></head>
+<body>
+  <h1>Resultado de la evaluación</h1>
+  <p>Cumplimiento: {{ stats.cumplidos }} / {{ stats.total }} ({{ stats.porcentaje }}%)</p>
+  <table border="1">
+    <tr><th>Código</th><th>Respuesta</th></tr>
+    {% for item in respuestas %}
+      <tr>
+        <td>{{ item.id }}</td>
+        <td>{{ item.respuesta }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+  <p><a href="/">Volver al menú</a></p>
+</body>
+</html>

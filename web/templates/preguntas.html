@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="es">
+<head><meta charset="utf-8"><title>Cuestionario ENS</title></head>
+<body>
+  <h1>Responde el cuestionario</h1>
+  <form method="post">
+    {% for code, pregunta in controles %}
+      <div>
+        <label>{{ pregunta }}</label><br/>
+        <input type="radio" name="{{ code }}" value="sí" checked> Sí
+        <input type="radio" name="{{ code }}" value="no"> No
+      </div>
+      <hr/>
+    {% endfor %}
+    <button type="submit">Enviar respuestas</button>
+  </form>
+</body>
+</html>
