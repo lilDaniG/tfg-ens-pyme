@@ -1,0 +1,9 @@
+# Entorno virtual (si llega a existir)
+.venv/
+# Carpeta de subidas temporales
+uploads/
+# Archivos de Python compilados
+__pycache__/
+*.py[cod]
+# Configs de Docker Compose
+docker-compose.override.yml

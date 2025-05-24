@@ -1,0 +1,17 @@
+# TFG ENS 2022 PYME Toolkit Web App
+
+Este repositorio contiene una aplicación web en Flask que integra los scripts de tu TFG para ayudar a PYMEs a cumplir con el ENS 2022 nivel Alto.
+
+## Estructura
+
+- `/web`: Aplicación Flask y contenedor Docker
+- `/scripts`: Scripts de evaluación, diagnóstico, etc.
+
+## Cómo usar
+
+1. Clona el repositorio
+2. `cd web`
+3. `docker-compose up --build`
+4. Accede a `http://localhost:5000`
+
+---
