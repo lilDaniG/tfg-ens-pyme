@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Diagnóstico ENS</title>
+</head>
+<body>
+  <h1>Diagnóstico detallado</h1>
+  <table border="1">
+    <tr><th>Código ENS</th><th>Estado</th><th>Recomendación</th></tr>
+    {% for fila in tabla %}
+      <tr>
+        <td>{{ fila['Código ENS'] }}</td>
+        <td>{{ fila['Estado'] }}</td>
+        <td>{{ fila['Recomendación'] }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+  <p><a href="{{ url_for('index') }}">Volver al menú</a></p>
+</body>
+</html>

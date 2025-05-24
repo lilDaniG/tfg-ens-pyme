@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
-from flask import jsonify
 import os
+
 from scripts.script1_evaluador import load_questions, calculate_stats
+from scripts.script2_diagnostico import generate_diagnostic
 
 app = Flask(__name__)
 app.secret_key = 'cambiar_esta_clave'
@@ -36,21 +37,34 @@ def mostrar_preguntas():
         flash('No se ha subido ningún archivo.')
         return redirect(url_for('index'))
     path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    # POST: procesa respuestas
+
     if request.method == 'POST':
+        # Recoger y guardar respuestas
         respuestas = []
         for code in request.form:
             resp = request.form.get(code)
             respuestas.append({'id': code, 'respuesta': resp})
+        session['last_respuestas'] = respuestas
+
+        # Calcular estadísticas y mostrar resultado
         stats = calculate_stats(respuestas)
         return render_template('resultado.html', respuestas=respuestas, stats=stats)
-    # GET: muestra el cuestionario
+
+    # GET: mostrar el cuestionario
     controles = load_questions(path)  # lista de tuplas (id, pregunta)
     return render_template('preguntas.html', controles=controles)
 
 @app.route('/diagnostico', methods=['GET'])
 def diagnostico():
-    return "Generador de diagnóstico (placeholder)"
+    respuestas = session.get('last_respuestas')
+    if not respuestas:
+        flash('Primero debes completar la evaluación.')
+        return redirect(url_for('index'))
+
+    # Generar diagnóstico y mostrarlos
+    df = generate_diagnostic(respuestas)
+    tabla = df.to_dict(orient='records')
+    return render_template('diagnostico.html', tabla=tabla)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
