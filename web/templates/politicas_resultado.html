@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Resultado: Políticas Generadas</title>
+</head>
+<body>
+  <h1>Políticas generadas</h1>
+  {% for pol in resultados %}
+    <h2>{{ pol.filename }}</h2>
+    <pre>{{ pol.content }}</pre>
+    <a href="data:application/x-yaml;charset=utf-8,{{ pol.content|urlencode }}"
+       download="{{ pol.filename }}">
+      Descargar {{ pol.filename }}
+    </a>
+    <hr>
+  {% endfor %}
+  <p><a href="{{ url_for('index') }}">Volver al menú principal</a></p>
+</body>
+</html>

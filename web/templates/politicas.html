@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Generar Políticas ENS</title>
+  <style>
+    .section { display: none; margin: 1em 0; padding: 1em; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+  <h1>3. Generar Políticas de Seguridad</h1>
+  <form method="post">
+    <fieldset>
+      <legend>¿Qué políticas quieres generar?</legend>
+      <label><input type="checkbox" name="policies" value="seguridad"> Política de Seguridad (Org.1)</label><br>
+      <label><input type="checkbox" name="policies" value="accesos"> Control de Accesos (Op.acc.5/6)</label><br>
+      <label><input type="checkbox" name="policies" value="backups"> Copias de Seguridad (Op.cont.1)</label><br>
+      <label><input type="checkbox" name="policies" value="cifrado"> Cifrado (Mp.si.2)</label><br>
+      <label><input type="checkbox" name="policies" value="incidentes"> Gestión de Incidentes (Op.exp.3)</label>
+    </fieldset>
+
+    <!-- Parámetros generales -->
+    <div class="section" id="general" style="display:block;">
+      <h2>Parámetros generales</h2>
+      <label>Nombre de la PYME: <input type="text" name="company_name" required></label><br>
+      <label>Responsable de Seguridad: <input type="text" name="security_officer" required></label><br>
+      <label>Roles (separados por comas): <input type="text" name="roles" required></label>
+    </div>
+
+    <!-- Control de Accesos -->
+    <div class="section" id="accesos">
+      <h2>Parámetros Control de Accesos</h2>
+      <label><input type="checkbox" name="use_2fa"> Usar 2FA</label><br>
+      <label>Longitud mínima de password: <input type="number" name="pwd_length" value="12"></label><br>
+      <label>Caducidad de password (días): <input type="number" name="pwd_expiry" value="90"></label>
+    </div>
+
+    <!-- Copias de Seguridad -->
+    <div class="section" id="backups">
+      <h2>Parámetros Copias de Seguridad</h2>
+      <label>Frecuencia:
+        <select name="backup_freq">
+          <option value="diario">Diario</option>
+          <option value="semanal">Semanal</option>
+          <option value="mensual">Mensual</option>
+        </select>
+      </label><br>
+      <label>Retención (días): <input type="number" name="backup_retention" value="30"></label><br>
+      <label>Destino de copia: <input type="text" name="backup_dest"></label>
+    </div>
+
+    <!-- Cifrado -->
+    <div class="section" id="cifrado">
+      <h2>Parámetros Cifrado</h2>
+      <label>Algoritmo:
+        <select name="enc_algo">
+          <option>AES-256</option>
+          <option>RSA-2048</option>
+          <option>ChaCha20</option>
+        </select>
+      </label><br>
+      <label>Rotación de claves (días): <input type="number" name="key_rotation" value="180"></label>
+    </div>
+
+    <!-- Gestión de Incidentes -->
+    <div class="section" id="incidentes">
+      <h2>Parámetros Gestión de Incidentes</h2>
+      <label>Canal de notificación: <input type="text" name="incident_channel" value="email"></label><br>
+      <label>Tiempo de respuesta máxima (horas): <input type="number" name="incident_response_time" value="4"></label>
+    </div>
+
+    <button type="submit">Generar políticas</button>
+  </form>
+
+  <script>
+    // Muestra/oculta secciones según checkboxes
+    const mapSec = {
+      accesos: 'accesos', backups: 'backups',
+      cifrado: 'cifrado', incidentes: 'incidentes'
+    };
+    document.querySelectorAll('input[name="policies"]').forEach(cb => {
+      cb.onchange = update;
+    });
+    function update() {
+      // Oculta todas
+      Object.values(mapSec).forEach(id => document.getElementById(id).style.display='none');
+      // Muestra las seleccionadas
+      document.querySelectorAll('input[name="policies"]:checked').forEach(cb => {
+        const sec = mapSec[cb.value];
+        if (sec) document.getElementById(sec).style.display='block';
+      });
+    }
+    update();
+  </script>
+</body>
+</html>

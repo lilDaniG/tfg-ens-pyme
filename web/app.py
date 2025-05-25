@@ -3,6 +3,8 @@ import os
 
 from scripts.script1_evaluador import load_questions, calculate_stats
 from scripts.script2_diagnostico import generate_diagnostic
+from scripts.script3_politicas import generate_policy
+
 
 app = Flask(__name__)
 app.secret_key = 'cambiar_esta_clave'
@@ -65,6 +67,20 @@ def diagnostico():
     df = generate_diagnostic(respuestas)
     tabla = df.to_dict(orient='records')
     return render_template('diagnostico.html', tabla=tabla)
+
+@app.route('/politicas', methods=['GET','POST'])
+def politicas():
+    if request.method == 'POST':
+        # Recogemos todos los campos del formulario en un dict
+        params = request.form.to_dict(flat=True)
+        # Recogemos la lista de políticas marcadas
+        selected = request.form.getlist('policies')
+        # Generamos cada política
+        resultados = [ generate_policy(key, params) for key in selected ]
+        return render_template('politicas_resultado.html', resultados=resultados)
+    # GET solo muestra el formulario
+    return render_template('politicas.html')
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

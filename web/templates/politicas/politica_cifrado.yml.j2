@@ -1,0 +1,11 @@
+# Política de Criptografía
+company: {{ company_name }}
+responsable: {{ security_officer }}
+algoritmo: {{ enc_algo }}
+rotacion_claves_dias: {{ key_rotation }}
+procedimiento: >
+  1. Generar claves con algoritmo {{ enc_algo }}.
+  2. Almacenar claves en sistema protegido.
+  3. Rotar claves cada {{ key_rotation }} días.
+revisiones:
+  frecuencia: anual

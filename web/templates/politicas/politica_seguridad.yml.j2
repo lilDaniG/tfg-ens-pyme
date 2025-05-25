@@ -1,0 +1,13 @@
+# Política de Seguridad de la Información
+company: {{ company_name }}
+responsable: {{ security_officer }}
+roles:
+{% for r in roles.split(',') %}
+  - {{ r.strip() }}
+{% endfor %}
+objetivo: >
+  Establecer los principios y directrices para garantizar la
+  confidencialidad, integridad y disponibilidad de los sistemas de información.
+alcance: Todo el personal y sistemas bajo responsabilidad de {{ company_name }}.
+revisiones:
+  frecuencia: anual
